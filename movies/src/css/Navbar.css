@@ -1,0 +1,67 @@
+.navbar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 40px;
+  background: linear-gradient(90deg, #0d0d0f, #1a1a1d);
+  padding: 18px 0;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.6);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.nav-item {
+  position: relative;
+  color: #f5f5f5;
+  text-decoration: none;
+  font-family: "Poppins", sans-serif;
+  font-weight: 500;
+  font-size: 18px;
+  letter-spacing: 0.5px;
+  transition: color 0.3s ease;
+}
+
+/* Hover efekti */
+.nav-item::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -5px;
+  width: 0%;
+  height: 2px;
+  background: linear-gradient(90deg, #ff00c8, #9b4dff);
+  border-radius: 2px;
+  transition: width 0.3s ease;
+}
+
+.nav-item:hover {
+  color: #ff9ef5;
+}
+
+.nav-item:hover::after {
+  width: 100%;
+}
+
+/* Aktif link */
+.nav-item.active {
+  color: #ff66cc;
+  font-weight: 600;
+}
+
+.nav-item.active::after {
+  width: 100%;
+  background: linear-gradient(90deg, #ff66cc, #9b4dff);
+}
+
+/* Mobil uyum */
+@media (max-width: 700px) {
+  .navbar {
+    gap: 20px;
+    font-size: 16px;
+    padding: 12px 0;
+  }
+  .nav-item {
+    font-size: 16px;
+  }
+}

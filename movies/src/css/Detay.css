@@ -1,0 +1,206 @@
+:root {
+  --bg-dark: #070708;
+  --card-bg: rgba(20, 22, 26, 0.85);
+  --muted: #cfcfcf;
+  --accent: #ff5d8f;
+  --accent-2: #ff9ac0;
+  --glass: rgba(255, 255, 255, 0.05);
+}
+
+/* Tam ekran arka plan */
+.detay-root {
+  min-height: 100vh;
+  background-color: var(--bg-dark);
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  position: relative;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  overflow-x: hidden;
+}
+
+/* Arka plan blur ve karartma */
+.detay-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.55) 10%, rgba(0, 0, 0, 0.85) 80%);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  z-index: 0;
+}
+
+/* Kart */
+.detay-container {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 1050px;
+  display: flex;
+  gap: 32px;
+  background: var(--card-bg);
+  border-radius: 18px;
+  padding: 28px;
+  box-shadow: 0 25px 60px rgba(2, 6, 23, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(10px);
+  box-sizing: border-box;
+}
+
+/* Poster */
+.detay-poster-wrap {
+  width: 250px;
+  min-width: 200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.detay-poster {
+  width: 100%;
+  border-radius: 14px;
+  box-shadow: 0 20px 50px rgba(2, 6, 23, 0.7);
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+}
+
+@media (hover: hover) and (min-width: 700px) {
+  .detay-poster-wrap:hover .detay-poster {
+    transform: translateY(-8px) scale(1.04);
+    box-shadow: 0 35px 80px rgba(0, 0, 0, 0.85);
+  }
+}
+
+/* Etiket */
+.detay-badge {
+  position: absolute;
+  left: 10px;
+  bottom: -12px;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.03));
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-size: 13px;
+  color: var(--muted);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow: 0 6px 18px rgba(2, 6, 23, 0.6);
+}
+
+/* Bilgiler */
+.detay-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 8px 4px;
+}
+
+.detay-title {
+  font-size: 30px;
+  line-height: 1.1;
+  font-weight: 700;
+  text-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
+}
+
+.detay-meta {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  color: var(--muted);
+  font-size: 15px;
+}
+
+.detay-overview {
+  margin-top: 4px;
+  color: #e8e8e8;
+  font-size: 16px;
+  line-height: 1.7;
+  max-height: 240px;
+  overflow-y: auto;
+  padding-right: 8px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--accent) transparent;
+}
+
+/* Butonlar */
+.detay-actions {
+  margin-top: 10px;
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.btn {
+  padding: 10px 16px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  font-weight: 600;
+  cursor: pointer;
+  background: var(--glass);
+  color: #fff;
+  transition: all 0.25s ease;
+}
+
+.btn.primary {
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+  color: #08060a;
+  box-shadow: 0 8px 25px rgba(255, 107, 154, 0.25);
+}
+
+.btn.ghost {
+  background: transparent;
+  color: var(--muted);
+}
+
+.btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
+}
+
+/* Alt kısım gradient */
+.detay-gradient-bottom {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 120px;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.85));
+  z-index: 1;
+}
+
+/* Loading */
+.detay-loading {
+  min-height: 60vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--muted);
+  font-size: 18px;
+}
+
+/* Responsive */
+@media (max-width: 880px) {
+  .detay-container {
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+  }
+  .detay-poster-wrap {
+    width: 60%;
+    min-width: 160px;
+  }
+  .detay-title {
+    font-size: 24px;
+    text-align: center;
+  }
+  .detay-meta {
+    justify-content: center;
+  }
+  .detay-overview {
+    max-height: none;
+  }
+  .detay-actions {
+    justify-content: center;
+  }
+}
