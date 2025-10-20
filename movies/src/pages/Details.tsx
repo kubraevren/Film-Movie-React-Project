@@ -11,6 +11,7 @@ type Props = {
 function Detay({ type }: Props) {
   const { id } = useParams<{ id: string }>();
 
+  // Redux state'ten verileri çek
   const { tvItems, movieItems } = useSelector((state: RootState) => state.home);
   const { items: popularFilms = [] } = useSelector((state: RootState) => state.film);
   const { items: popularTv = [] } = useSelector((state: RootState) => state.tv);
@@ -25,26 +26,30 @@ function Detay({ type }: Props) {
 
   if (!selected) return <div className="detay-loading">Yükleniyor...</div>;
 
+  // Başlık ve tarih bilgisi
   const title = "title" in selected ? selected.title : selected.name;
   const date = "release_date" in selected ? selected.release_date : selected.first_air_date;
 
+  // Arka plan resmi: backend veya TMDB kontrolü
+  const bgImage = selected.poster_path?.startsWith("/images")
+    ? `https://image.tmdb.org/t/p/w500${selected.poster_path}`
+    : `https://image.tmdb.org/t/p/original${selected.poster_path}`;
+
+  // Poster resmi: backend veya TMDB kontrolü
+  const posterImage = selected.poster_path?.startsWith("/images")
+    ?`https://image.tmdb.org/t/p/w500${selected.poster_path}`
+    : `https://image.tmdb.org/t/p/w500${selected.poster_path}`;
+
   return (
-    <div
-      className="detay-root"
-      style={{
-        backgroundImage: `url(https://image.tmdb.org/t/p/original${ selected.poster_path})`,
-      }}
-    >
+    <div className="detay-root" style={{ backgroundImage: `url(${bgImage})` }}>
       <div className="detay-overlay"></div>
 
       <div className="detay-container">
         <div className="detay-poster-wrap">
-          <img
-            src={`https://image.tmdb.org/t/p/w500${selected.poster_path}`}
-            alt={title}
-            className="detay-poster"
-          />
-          <span className="detay-badge" style={{marginTop:'80px'}}>{type === "film" ? "🎬 Film" : "📺 Dizi"}</span>
+          <img src={posterImage} alt={title} className="detay-poster" />
+          <span className="detay-badge" style={{ marginTop: "80px" }}>
+            {type === "film" ? "🎬 Film" : "📺 Dizi"}
+          </span>
         </div>
 
         <div className="detay-info">
@@ -52,9 +57,15 @@ function Detay({ type }: Props) {
           <p className="detay-overview">{selected.overview}</p>
 
           <div className="detay-meta">
-            <p><strong>Popülerlik:</strong> {selected.popularity}</p>
-            <p><strong>Vizyon:</strong> {date}</p>
-            <p><strong>Tür ID'leri:</strong> {selected.genre_ids.join(", ")}</p>
+            <p>
+              <strong>Popülerlik:</strong> {selected.popularity}
+            </p>
+            <p>
+              <strong>Vizyon:</strong> {date}
+            </p>
+            <p>
+              <strong>Tür ID'leri:</strong> {selected.genre_ids.join(", ") || "Bilinmiyor"}
+            </p>
           </div>
 
           <div className="detay-actions">

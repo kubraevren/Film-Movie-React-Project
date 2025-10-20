@@ -1,26 +1,50 @@
 import { useFormik } from 'formik';
 import { RegisterFormSchemas } from '../schemas/RegisterFormSchemas';
 import "../css/loginregister.css";
-
+import { useState } from 'react';
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { ToastContainer, toast } from 'react-toastify';
+import { auth } from '../Firebase';
+import { useNavigate } from 'react-router-dom';
 function Register() {
+
+
+    const navigate=useNavigate();
+
+    const register = async (values: any,actions:any) => {
+        try {
+
+            const response = await createUserWithEmailAndPassword(auth, values.email, values.password)
+            const user = response.user;
+            if (user) {
+                toast.success("Kullanıcı oluşturuldu")
+                actions.resetForm();
+                navigate("giris");
+            }
+        } catch (error: any) {
+            toast.error(error.message);
+        }
+    }
+
+     const formik = useFormik({
+    initialValues: {
+      email: '',
+      age: '',
+      password: '',
+      confirmPassword: '',
+      term: false,
+    },
+    validationSchema: RegisterFormSchemas,
+    onSubmit: register
+  });
+
     const submit = (values: any, action: any) => {
         setTimeout(() => {
             action.resetForm();
         }, 2000);
     }
 
-    const { values, errors, handleChange, handleSubmit, touched } = useFormik({
-        initialValues: {
-            email: '',
-            age: '',
-            password: '',
-            confirmPassword: '',
-            term: false,
-        },
-        validationSchema: RegisterFormSchemas,
-        onSubmit: submit
-    });
-
+    const { values, errors, handleChange, handleSubmit, touched } = formik;
     return (
         <div className="form-root">
             <form onSubmit={handleSubmit} className="form-container">
@@ -28,7 +52,7 @@ function Register() {
 
                 <div className="inputDiv">
                     <label>Email</label>
-                    <input 
+                    <input
                         type="text"
                         name="email"
                         placeholder="Email giriniz"
@@ -40,7 +64,7 @@ function Register() {
 
                 <div className="inputDiv">
                     <label>Yaş</label>
-                    <input 
+                    <input
                         type="number"
                         name="age"
                         placeholder="Yaşınızı giriniz"
@@ -52,7 +76,7 @@ function Register() {
 
                 <div className="inputDiv">
                     <label>Şifre</label>
-                    <input 
+                    <input
                         type="password"
                         name="password"
                         placeholder="Şifrenizi giriniz"
@@ -64,7 +88,7 @@ function Register() {
 
                 <div className="inputDiv">
                     <label>Şifre Tekrarı</label>
-                    <input 
+                    <input
                         type="password"
                         name="confirmPassword"
                         placeholder="Şifrenizi tekrar giriniz"
@@ -75,7 +99,7 @@ function Register() {
                 </div>
 
                 <div className="inputDiv" style={{ flexDirection: 'row', alignItems: 'center' }}>
-                    <input 
+                    <input
                         type="checkbox"
                         name="term"
                         checked={values.term}
@@ -86,7 +110,7 @@ function Register() {
                 </div>
 
                 <button type="submit" className="button">Kaydet</button>
-                        <a href='Login'>Hesabınız var mı? Giriş Yapın</a>
+                <a style={{ color: 'wheat' }} href='giris'>Hesabınız var mı? Giriş Yapın</a>
 
             </form>
         </div>

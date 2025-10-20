@@ -4,25 +4,29 @@ import Films from '../pages/Films';
 import Dizi from '../pages/Dizi';
 import Detay from '../pages/Details';
 import Login from '../pages/Login';
-import { useState } from 'react';
 import Register from '../pages/Register';
+import ProtectedRoute from '../components/ProtectedRoute';
 
 function RouterConfig() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-  const handleLogin = () => setIsLoggedIn(true);
-
   return (
     <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="/film" element={<Films />} />
-      <Route path="/dizi" element={<Dizi />} />
-      <Route path="/film/:id" element={<Detay type="film" />} />
-      <Route path="/tv/:id" element={<Detay type="tv" />} />
-      <Route path="/giris" element={<Login onLogin={handleLogin} />} />
-            <Route path="/register" element={<Register />} />
+      <Route path="/giris" element={<Login />} />
+      <Route path="/register" element={<Register />} />
+      <Route path="/" element={<Home/>} />
+      <Route path="/film" element={<ProtectedRoute>
+        <Films />
+      </ProtectedRoute>} />
+      <Route path="/dizi" element={<ProtectedRoute>
+        <Dizi />
+      </ProtectedRoute>} />
+      <Route path="/film/:id" element={<ProtectedRoute>
+        <Detay type="film" />
+      </ProtectedRoute>} />
+      <Route path="/tv/:id" element={<ProtectedRoute>
+        <Detay type="tv" />
+      </ProtectedRoute>} />
 
-      <Route path="/cikis" element={<Home />} /> {/* logout sonrası yönlendirme */}
+
     </Routes>
   );
 }

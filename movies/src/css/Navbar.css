@@ -48,20 +48,3 @@
   color: #ff66cc;
   font-weight: 600;
 }
-
-.nav-item.active::after {
-  width: 100%;
-  background: linear-gradient(90deg, #ff66cc, #9b4dff);
-}
-
-/* Mobil uyum */
-@media (max-width: 700px) {
-  .navbar {
-    gap: 20px;
-    font-size: 16px;
-    padding: 12px 0;
-  }
-  .nav-item {
-    font-size: 16px;
-  }
-}

@@ -96,13 +96,3 @@
   transform: translateY(-2px);
   box-shadow: 0 8px 20px rgba(255,107,154,0.4);
 }
-
-/* Responsive */
-@media (max-width: 480px) {
-  .form-container {
-    padding: 24px 18px;
-  }
-  .form-title {
-    font-size: 22px;
-  }
-}

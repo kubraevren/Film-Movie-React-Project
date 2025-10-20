@@ -134,12 +134,13 @@
 .btn {
   padding: 10px 16px;
   border-radius: 10px;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 0, 0, 0.08);
   font-weight: 600;
   cursor: pointer;
   background: var(--glass);
-  color: #fff;
+  color: #ffffff;
   transition: all 0.25s ease;
+  background-color: #ff9ac0;
 }
 
 .btn.primary {

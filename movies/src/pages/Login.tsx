@@ -2,34 +2,56 @@ import { useFormik } from 'formik';
 import { useNavigate } from 'react-router-dom';
 import { LoginFormSchemas } from "../schemas/LoginFormSchemas";
 import "../css/loginregister.css";
+import { FaGoogle } from "react-icons/fa";
+import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
+import { auth } from '../Firebase';
+import { toast } from 'react-toastify';
+import { GoogleAuthProvider } from "firebase/auth";
+const provider = new GoogleAuthProvider();
+function Login() {
 
-type Props = {
-  onLogin: () => void; // parent'tan login fonksiyonu alıyoruz
-};
-
-function Login({ onLogin }: Props) {
+ 
   const navigate = useNavigate();
 
-  const submit = (values: any, action: any) => {
-    // Burada backend login işlemi yapılabilir, biz simule ediyoruz
-    console.log("Login Values:", values);
-    onLogin(); // login durumunu güncelle
-    navigate("/"); // login sonrası ana sayfaya yönlendir
-    action.resetForm();
-  };
+  const loginWithGoogle = async () => {
+    try {
+      const response = await signInWithPopup(auth, provider)
 
-  const { values, errors, handleChange, handleSubmit, touched } = useFormik({
-    initialValues: {
-      email: '',
-      password: '',
-    },
+      const user = response.user;
+      if (user) {
+        toast.success("Google ile giriş başarılı")
+        navigate("/");
+      }
+    } catch (error: any) {
+      toast.error(error.message);
+    }
+  }
+
+  const login = async (values:any) => {
+    try {
+      const response = await signInWithEmailAndPassword(auth,values.email, values.password)
+      const user = response.user;
+      if (user) {
+        navigate("/");
+        toast.success("Giriş başarılı!")
+      }
+    } catch (error: any) {
+      toast.error("giriş yapılamadı: " + error.message);
+    }
+  }
+
+  const formik = useFormik({
+    initialValues: { email: '', password: '' },
     validationSchema: LoginFormSchemas,
-    onSubmit: submit
+    onSubmit: login
   });
+
+
+
 
   return (
     <div className="form-root">
-      <form onSubmit={handleSubmit} className="form-container">
+      <form onSubmit={formik.handleSubmit} className="form-container">
         <h2 className="form-title">Giriş Yap</h2>
 
         <div className='inputDiv'>
@@ -38,10 +60,10 @@ function Login({ onLogin }: Props) {
             type='text'
             name='email'
             placeholder='Email giriniz'
-            value={values.email}
-            onChange={handleChange}
+            value={formik.values.email}
+            onChange={formik.handleChange}
           />
-          {errors.email && touched.email && <p className='input-error'>{errors.email}</p>}
+          {formik.errors.email && formik.touched.email && <p className='input-error'>{formik.errors.email}</p>}
         </div>
 
         <div className='inputDiv'>
@@ -50,14 +72,17 @@ function Login({ onLogin }: Props) {
             type='password'
             name='password'
             placeholder='Şifrenizi giriniz'
-            value={values.password}
-            onChange={handleChange}
+            value={formik.values.password}
+            onChange={formik.handleChange}
           />
-          {errors.password && touched.password && <p className='input-error'>{errors.password}</p>}
+         {formik.errors.password && formik.touched.password && (
+            <p className='input-error'>{formik.errors.password}</p>
+          )}
         </div>
 
         <button type='submit' className='button'>Giriş Yap</button>
-        <a href='Register'>Kayıt ol</a>
+        <button onClick={loginWithGoogle} type='submit' className='button'><FaGoogle style={{ marginRight: '15px', color: 'brown' }} /> Google ile Giriş Yap</button>
+        <a style={{ color: 'wheat' }} href='Register'>Kayıt ol</a>
       </form>
     </div>
   );
