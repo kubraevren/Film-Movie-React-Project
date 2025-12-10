@@ -41,15 +41,3 @@ Notifications: React Toastify
 
 Styling: CSS Modules, Custom CSS
 
-src/
-├── components/      # Tekrar kullanılabilir bileşenler (Navbar, Card, ProtectedRoute)
-├── config/          # Router yapılandırması
-├── css/             # Sayfa ve bileşen stilleri
-├── pages/           # Sayfa görünümleri (Home, Login, Register, Details...)
-├── schemas/         # Yup validasyon şemaları
-├── slice/           # Redux slice'ları (API istekleri ve state)
-├── types/           # TypeScript tip tanımlamaları
-├── App.tsx          # Ana uygulama bileşeni
-├── Firebase.tsx     # Firebase konfigürasyonu
-├── main.tsx         # Giriş noktası
-└── store.tsx        # Redux store yapılandırması
