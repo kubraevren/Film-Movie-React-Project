@@ -2,6 +2,9 @@
 Film ve dizileri keşfetmek, arama yapmak ve detaylı bilgilerine ulaşmak için geliştirilmiş modern bir web uygulamasıdır. Kullanıcılar popüler içerikleri listeleyebilir, detay sayfalarında gezinebilir ve favori içeriklerini bulabilirler.
 
 🚀 Özellikler
+
+
+
 🔐 Kimlik Doğrulama (Authentication):
 
 Firebase entegrasyonu ile güvenli giriş ve kayıt işlemleri.
